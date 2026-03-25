@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emma - Your English Teacher</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #2d3561;
+  --secondary: #c05c7e;
+  --accent: #f3826f;
+  --bg-light: #fef8f4;
+  --bg-white: #ffffff;
+  --text-dark: #2d3561;
+  --text-muted: #6b7280;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #fef8f4 0%, #ffe9e0 100%);
+  min-height: 100vh;
+  color: var(--text-dark);
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  animation: fadeInDown 0.6s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.teacher-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  box-shadow: 0 10px 30px rgba(192, 92, 126, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.teacher-avatar.listening {
+  animation: listening 1s ease-in-out infinite;
+}
+
+@keyframes listening {
+  0%, 100% {
+    box-shadow: 0 10px 30px rgba(192, 92, 126, 0.3);
+  }
+  50% {
+    box-shadow: 0 10px 40px rgba(192, 92, 126, 0.6), 0 0 0 10px rgba(192, 92, 126, 0.1);
+  }
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: var(--primary);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.tagline {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.mode-selector {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  flex: 1;
+  max-width: 280px;
+  min-width: 240px;
+}
+
+.mode-btn:hover {
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(192, 92, 126, 0.15);
+}
+
+.mode-btn.active {
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  border-color: var(--secondary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(192, 92, 126, 0.3);
+}
+
+.mode-icon {
+  font-size: 28px;
+}
+
+.mode-info {
+  text-align: left;
+}
+
+.mode-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.mode-btn.active .mode-title {
+  color: white;
+}
+
+.mode-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.mode-btn.active .mode-desc {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.chat-area {
+  flex: 1;
+  background: var(--bg-white);
+  border-radius: 24px;
+  padding: 30px;
+  margin: 20px 0;
+  box-shadow: 0 4px 20px rgba(45, 53, 97, 0.08);
+  overflow-y: auto;
+  max-height: 500px;
+  animation: fadeIn 0.6s ease 0.2s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message {
+  margin-bottom: 20px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.message.student {
+  text-align: right;
+}
+
+.message-bubble {
+  display: inline-block;
+  max-width: 80%;
+  padding: 16px 20px;
+  border-radius: 18px;
+  line-height: 1.6;
+}
+
+.message.teacher .message-bubble {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  color: var(--text-dark);
+  border-bottom-left-radius: 4px;
+}
+
+.message.student .message-bubble {
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.correction {
+  background: #fff3cd;
+  border-left: 4px solid var(--warning);
+  padding: 12px 16px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.correction-title {
+  font-weight: 600;
+  color: var(--warning);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.correct-text {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.6s ease 0.4s both;
+}
+
+.btn {
+  padding: 16px 32px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  color: white;
+  box-shadow: 0 4px 15px rgba(192, 92, 126, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(192, 92, 126, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+}
+
+.btn-secondary:hover {
+  background: var(--primary);
+  color: white;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.status {
+  text-align: center;
+  padding: 12px;
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.status.listening {
+  color: var(--error);
+  font-weight: 600;
+}
+
+.status.speaking {
+  color: var(--secondary);
+  font-weight: 600;
+}
+
+.welcome-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.welcome-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.welcome-card ul {
+  list-style: none;
+  margin-top: 15px;
+}
+
+.welcome-card li {
+  padding: 8px 0;
+  padding-left: 30px;
+  position: relative;
+}
+
+.welcome-card li:before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  font-weight: bold;
+  color: #10b981;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.stat-card {
+  background: white;
+  padding: 20px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(45, 53, 97, 0.08);
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--secondary);
+  font-family: 'Playfair Display', serif;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 5px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.topic-chips {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.chip {
+  padding: 8px 16px;
+  background: white;
+  border: 2px solid var(--secondary);
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.chip:hover {
+  background: var(--secondary);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.microphone-icon {
+  font-size: 20px;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 32px;
+  }
+  
+  .mode-selector {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .mode-btn {
+    max-width: 100%;
+    min-width: auto;
+  }
+  
+  .stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .controls {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="teacher-avatar" id="avatar">👩‍🏫</div>
+    <h1>Emma</h1>
+    <p class="tagline">Your Personal English Speaking Coach</p>
+    
+    <div class="mode-selector">
+      <button class="mode-btn active" id="nativeMode" onclick="switchMode('native')">
+        <span class="mode-icon">💬</span>
+        <div class="mode-info">
+          <div class="mode-title">Native Speaking</div>
+          <div class="mode-desc">Casual & everyday English</div>
+        </div>
+      </button>
+      <button class="mode-btn" id="corporateMode" onclick="switchMode('corporate')">
+        <span class="mode-icon">💼</span>
+        <div class="mode-info">
+          <div class="mode-title">Professional Corporate</div>
+          <div class="mode-desc">Business & formal English</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="chat-area" id="chatArea">
+    <div class="welcome-card">
+      <h3>Welcome! I'm Emma 👋</h3>
+      <p>I'm here to help you master English in two ways:</p>
+      <ul>
+        <li><strong>💬 Native Speaking Mode:</strong> Casual, everyday English for friends and social situations</li>
+        <li><strong>💼 Professional Corporate Mode:</strong> Formal business English for work, meetings, and emails</li>
+      </ul>
+      <p style="margin-top: 15px;">I will:</p>
+      <ul>
+        <li>Listen to you speak and give instant feedback</li>
+        <li>Correct your grammar and pronunciation</li>
+        <li>Teach you appropriate expressions for each mode</li>
+        <li>Help you sound natural and confident</li>
+      </ul>
+      <p style="margin-top: 20px; font-weight: 600;">🎯 Choose your mode above, then click "Start Speaking"!</p>
+    </div>
+
+    <div class="topic-chips" id="topicChips">
+      <div class="chip" onclick="suggestTopic('Tell me about your day')">Daily Life</div>
+      <div class="chip" onclick="suggestTopic('Let\'s talk about hobbies')">Hobbies</div>
+      <div class="chip" onclick="suggestTopic('Describe your weekend plans')">Weekend</div>
+      <div class="chip" onclick="suggestTopic('What are your goals?')">Goals</div>
+      <div class="chip" onclick="suggestTopic('Tell me a funny story')">Storytelling</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-number" id="sessionCount">0</div>
+        <div class="stat-label">Conversations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="correctionCount">0</div>
+        <div class="stat-label">Corrections</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" id="minutesCount">0</div>
+        <div class="stat-label">Minutes</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="status" id="status">Ready to practice! Click "Start Speaking"</div>
+
+  <div class="controls">
+    <button class="btn btn-primary" id="startBtn" onclick="startListening()">
+      <span class="microphone-icon">🎤</span>
+      Start Speaking
+    </button>
+    <button class="btn btn-secondary" id="stopBtn" onclick="stopListening()" disabled>
+      <span>⏹</span>
+      Stop
+    </button>
+  </div>
+</div>
+
+<script>
+let recognition;
+let synthesis = window.speechSynthesis;
+let isListening = false;
+let sessionCount = 0;
+let correctionCount = 0;
+let startTime = Date.now();
+let currentMode = 'native'; // 'native' or 'corporate'
+
+// Mode-specific topic chips
+const modeTopics = {
+  native: [
+    { text: 'Tell me about your day', prompt: 'Tell me about your day' },
+    { text: 'Hobbies', prompt: 'Let\'s talk about hobbies' },
+    { text: 'Weekend', prompt: 'Describe your weekend plans' },
+    { text: 'Goals', prompt: 'What are your goals?' },
+    { text: 'Storytelling', prompt: 'Tell me a funny story' }
+  ],
+  corporate: [
+    { text: 'Meeting', prompt: 'Let\'s practice a business meeting' },
+    { text: 'Presentation', prompt: 'Describe a project presentation' },
+    { text: 'Email Writing', prompt: 'Tell me about professional email etiquette' },
+    { text: 'Negotiation', prompt: 'Let\'s practice negotiating' },
+    { text: 'Networking', prompt: 'How do you introduce yourself professionally?' }
+  ]
+};
+
+function switchMode(mode) {
+  currentMode = mode;
+  
+  // Update button states
+  document.getElementById('nativeMode').classList.remove('active');
+  document.getElementById('corporateMode').classList.remove('active');
+  
+  if (mode === 'native') {
+    document.getElementById('nativeMode').classList.add('active');
+  } else {
+    document.getElementById('corporateMode').classList.add('active');
+  }
+  
+  // Update topic chips
+  updateTopicChips();
+  
+  // Announce mode change
+  const modeMessages = {
+    native: "Great! I've switched to Native Speaking Mode. Let's practice casual, everyday English. Feel free to use slang and informal expressions!",
+    corporate: "Excellent! I've switched to Professional Corporate Mode. Let's focus on formal business English, professional vocabulary, and workplace communication."
+  };
+  
+  addMessage('teacher', modeMessages[mode]);
+  speak(modeMessages[mode]);
+}
+
+function updateTopicChips() {
+  const topics = modeTopics[currentMode];
+  const chipsContainer = document.getElementById('topicChips');
+  
+  chipsContainer.innerHTML = topics.map(topic => 
+    `<div class="chip" onclick="suggestTopic('${topic.prompt}')">${topic.text}</div>`
+  ).join('');
+}
+
+// Check browser support
+if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+  alert('Sorry! Your browser does not support speech recognition. Please use Chrome, Edge, or Safari.');
+}
+
+// Initialize speech recognition
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+recognition = new SpeechRecognition();
+recognition.continuous = false;
+recognition.interimResults = false;
+recognition.lang = 'en-US';
+
+// Update minutes counter
+setInterval(() => {
+  const minutes = Math.floor((Date.now() - startTime) / 60000);
+  document.getElementById('minutesCount').textContent = minutes;
+}, 60000);
+
+function startListening() {
+  if (!recognition) {
+    speak("Sorry, speech recognition is not supported in your browser. Please use Chrome, Edge, or Safari.");
+    return;
+  }
+
+  isListening = true;
+  document.getElementById('startBtn').disabled = true;
+  document.getElementById('stopBtn').disabled = false;
+  document.getElementById('status').textContent = '🎤 Listening... speak now!';
+  document.getElementById('status').className = 'status listening';
+  document.getElementById('avatar').classList.add('listening');
+
+  recognition.start();
+}
+
+function stopListening() {
+  isListening = false;
+  recognition.stop();
+  document.getElementById('startBtn').disabled = false;
+  document.getElementById('stopBtn').disabled = true;
+  document.getElementById('status').textContent = 'Ready to practice! Click "Start Speaking"';
+  document.getElementById('status').className = 'status';
+  document.getElementById('avatar').classList.remove('listening');
+}
+
+recognition.onresult = (event) => {
+  const transcript = event.results[0][0].transcript;
+  
+  // Add student message
+  addMessage('student', transcript);
+  
+  // Analyze and respond
+  analyzeAndRespond(transcript);
+  
+  // Update stats
+  sessionCount++;
+  document.getElementById('sessionCount').textContent = sessionCount;
+};
+
+recognition.onerror = (event) => {
+  console.error('Speech recognition error:', event.error);
+  stopListening();
+  
+  if (event.error === 'no-speech') {
+    speak("I didn't hear anything. Please try again and speak clearly.");
+  } else if (event.error === 'not-allowed') {
+    alert('Microphone access denied. Please allow microphone access in your browser settings.');
+  }
+};
+
+recognition.onend = () => {
+  if (isListening) {
+    recognition.start();
+  }
+};
+
+function analyzeAndRespond(text) {
+  const analysis = analyzeEnglish(text);
+  
+  let response = '';
+  let hasCorrections = false;
+  
+  if (analysis.corrections.length > 0) {
+    hasCorrections = true;
+    correctionCount += analysis.corrections.length;
+    document.getElementById('correctionCount').textContent = correctionCount;
+    
+    response = getEncouragingResponse() + ' ';
+    analysis.corrections.forEach(correction => {
+      addCorrection(correction);
+    });
+  } else {
+    response = getPerfectResponse() + ' ';
+  }
+  
+  // Add teaching point or follow-up question
+  response += analysis.teachingPoint;
+  
+  addMessage('teacher', response);
+  speak(response);
+}
+
+function analyzeEnglish(text) {
+  const corrections = [];
+  let teachingPoint = '';
+  
+  // Common grammar mistakes (apply to both modes)
+  const grammarMistakes = [
+    { wrong: /\bi is\b/gi, correct: 'I am', example: '"I am" not "I is"' },
+    { wrong: /\bhe don't\b/gi, correct: 'he doesn\'t', example: '"He doesn\'t" not "he don\'t"' },
+    { wrong: /\bshe don't\b/gi, correct: 'she doesn\'t', example: '"She doesn\'t" not "she don\'t"' },
+    { wrong: /\bit don't\b/gi, correct: 'it doesn\'t', example: '"It doesn\'t" not "it don\'t"' },
+    { wrong: /\bgoed\b/gi, correct: 'went', example: '"Went" is the past tense of "go"' },
+    { wrong: /\bwas went\b/gi, correct: 'went', example: 'Just say "went", not "was went"' },
+    { wrong: /\bmuch people\b/gi, correct: 'many people', example: 'Use "many" with countable nouns' },
+    { wrong: /\bmore better\b/gi, correct: 'better', example: '"Better" already means "more good"' },
+    { wrong: /\bmore easier\b/gi, correct: 'easier', example: '"Easier" already means "more easy"' },
+    { wrong: /\bdidn't went\b/gi, correct: 'didn\'t go', example: 'Use base form after "didn\'t"' },
+    { wrong: /\bdon't went\b/gi, correct: 'don\'t go', example: 'Use base form after "don\'t"' },
+    { wrong: /\bI wants\b/gi, correct: 'I want', example: 'Use "want" not "wants" with "I"' },
+    { wrong: /\bhe go\b/gi, correct: 'he goes', example: 'Add "s" for third person: "he goes"' },
+    { wrong: /\bshe go\b/gi, correct: 'she goes', example: 'Add "s" for third person: "she goes"' },
+  ];
+  
+  grammarMistakes.forEach(mistake => {
+    if (mistake.wrong.test(text)) {
+      corrections.push({
+        wrong: text.match(mistake.wrong)[0],
+        correct: mistake.correct,
+        explanation: mistake.example
+      });
+    }
+  });
+  
+  // Mode-specific corrections and teaching
+  if (currentMode === 'corporate') {
+    // Corporate mode: Check for informal language
+    const informalPhrases = [
+      { wrong: /\byeah\b/gi, correct: 'yes', example: 'In professional settings, say "yes" instead of "yeah"' },
+      { wrong: /\bnope\b/gi, correct: 'no', example: 'Use "no" instead of "nope" in formal contexts' },
+      { wrong: /\bgonna\b/gi, correct: 'going to', example: 'Say "going to" instead of "gonna" in business' },
+      { wrong: /\bwanna\b/gi, correct: 'want to', example: 'Use "want to" instead of "wanna" professionally' },
+      { wrong: /\bkinda\b/gi, correct: 'kind of', example: 'Say "kind of" or "somewhat" in formal speech' },
+      { wrong: /\bgotta\b/gi, correct: 'have to', example: 'Use "have to" or "must" in professional contexts' },
+      { wrong: /\blots of\b/gi, correct: 'many/much', example: 'In formal writing, use "many" or "numerous"' },
+    ];
+    
+    informalPhrases.forEach(phrase => {
+      if (phrase.wrong.test(text)) {
+        corrections.push({
+          wrong: text.match(phrase.wrong)[0],
+          correct: phrase.correct,
+          explanation: phrase.example,
+          type: 'formality'
+        });
+      }
+    });
+    
+    // Corporate teaching points
+    const corporateTopics = [
+      { keyword: /\bmeeting|discuss|agenda\b/i, tip: 'In meetings, use phrases like "I\'d like to bring up...", "Let\'s circle back to...", or "Could we table this discussion?"' },
+      { keyword: /\bemail|write|send\b/i, tip: 'For professional emails, start with "I hope this email finds you well" or "I\'m writing to follow up on..." and end with "Best regards" or "Kind regards"' },
+      { keyword: /\bproject|deadline|task\b/i, tip: 'When discussing projects, use: "We\'re on track to deliver...", "The timeline is...", or "Our key milestones are..."' },
+      { keyword: /\bpresent|pitch|proposal\b/i, tip: 'For presentations, use: "I\'d like to walk you through...", "Let me highlight...", or "The key takeaway is..."' },
+      { keyword: /\bclient|customer|stakeholder\b/i, tip: 'When discussing clients, use: "We\'re committed to...", "Our priority is to...", or "We value their feedback"' },
+      { keyword: /\bprolem|issue|challenge\b/i, tip: 'Frame problems positively: "We\'re facing a challenge with..." or "An opportunity for improvement is..."' },
+    ];
+    
+    let foundTopic = false;
+    for (let topic of corporateTopics) {
+      if (topic.keyword.test(text)) {
+        teachingPoint = topic.tip;
+        foundTopic = true;
+        break;
+      }
+    }
+    
+    if (!foundTopic) {
+      const corporateFollowUps = [
+        "Could you elaborate on that point?",
+        "That's a valuable insight. What are the next steps?",
+        "How would you present that to stakeholders?",
+        "What metrics would you use to measure success?",
+      ];
+      teachingPoint = corporateFollowUps[Math.floor(Math.random() * corporateFollowUps.length)];
+    }
+    
+  } else {
+    // Native mode: Encourage natural expressions
+    const nativeTopics = [
+      { keyword: /\bwork|job|office\b/i, tip: 'Natives often say "What do you do for work?" instead of "What is your job?". Also try "I work in..." instead of "I work as..."' },
+      { keyword: /\bhobby|hobbies|like|love\b/i, tip: 'Sound more natural with "I\'m really into..." or "I\'m crazy about..." instead of just "I like"' },
+      { keyword: /\bday|today|morning|evening\b/i, tip: 'Natives say "How\'s it going?" or "What have you been up to?" instead of the formal "How are you?"' },
+      { keyword: /\bfuture|plan|want|will\b/i, tip: 'Use contractions naturally: "I\'m gonna" (casual), "I\'ll probably", "I might" - natives love shortcuts!' },
+      { keyword: /\bfriend|people|family\b/i, tip: 'Try phrases like "hang out with", "catch up with", or "bump into" - these sound very native!' },
+      { keyword: /\btired|busy|stressed\b/i, tip: 'Natives say "I\'m swamped", "I\'m beat", or "I\'m running around like crazy" - much more colorful!' },
+    ];
+    
+    let foundTopic = false;
+    for (let topic of nativeTopics) {
+      if (topic.keyword.test(text)) {
+        teachingPoint = topic.tip;
+        foundTopic = true;
+        break;
+      }
+    }
+    
+    if (!foundTopic) {
+      const nativeFollowUps = [
+        "That's cool! Tell me more about that.",
+        "Nice! What else is going on?",
+        "Awesome! How did that make you feel?",
+        "Sweet! Can you give me an example?",
+      ];
+      teachingPoint = nativeFollowUps[Math.floor(Math.random() * nativeFollowUps.length)];
+    }
+  }
+  
+  return { corrections, teachingPoint };
+}
+
+function getEncouragingResponse() {
+  const responses = [
+    "Good effort!",
+    "Nice try!",
+    "You're doing well!",
+    "Keep it up!",
+    "Great progress!",
+  ];
+  return responses[Math.floor(Math.random() * responses.length)];
+}
+
+function getPerfectResponse() {
+  const responses = [
+    "Perfect!",
+    "Excellent!",
+    "Great job!",
+    "Very good!",
+    "Well done!",
+    "That's correct!",
+  ];
+  return responses[Math.floor(Math.random() * responses.length)];
+}
+
+function addMessage(type, text) {
+  const chatArea = document.getElementById('chatArea');
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `message ${type}`;
+  
+  const bubbleDiv = document.createElement('div');
+  bubbleDiv.className = 'message-bubble';
+  bubbleDiv.textContent = text;
+  
+  messageDiv.appendChild(bubbleDiv);
+  chatArea.appendChild(messageDiv);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function addCorrection(correction) {
+  const chatArea = document.getElementById('chatArea');
+  const correctionDiv = document.createElement('div');
+  correctionDiv.className = 'message teacher';
+  
+  const icon = correction.type === 'formality' ? '💼' : '✏️';
+  const title = correction.type === 'formality' ? 'Professional tip' : 'Small correction';
+  
+  correctionDiv.innerHTML = `
+    <div class="message-bubble">
+      <div class="correction">
+        <div class="correction-title">${icon} ${title}</div>
+        <div>You said: "<strong>${correction.wrong}</strong>"</div>
+        <div>Say instead: "<span class="correct-text">${correction.correct}</span>"</div>
+        <div style="margin-top: 8px; font-style: italic;">💡 ${correction.explanation}</div>
+      </div>
+    </div>
+  `;
+  
+  chatArea.appendChild(correctionDiv);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function speak(text) {
+  // Cancel any ongoing speech
+  synthesis.cancel();
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  utterance.rate = 0.9;
+  utterance.pitch = 1.1;
+  
+  // Try to use a female voice
+  const voices = synthesis.getVoices();
+  const femaleVoice = voices.find(voice => 
+    voice.name.includes('Female') || 
+    voice.name.includes('woman') || 
+    voice.name.includes('Samantha') ||
+    voice.name.includes('Victoria') ||
+    voice.name.includes('Karen')
+  );
+  
+  if (femaleVoice) {
+    utterance.voice = femaleVoice;
+  }
+  
+  document.getElementById('status').textContent = '🗣 Emma is speaking...';
+  document.getElementById('status').className = 'status speaking';
+  
+  utterance.onend = () => {
+    if (isListening) {
+      document.getElementById('status').textContent = '🎤 Listening... speak now!';
+      document.getElementById('status').className = 'status listening';
+    } else {
+      document.getElementById('status').textContent = 'Ready to practice! Click "Start Speaking"';
+      document.getElementById('status').className = 'status';
+    }
+  };
+  
+  synthesis.speak(utterance);
+}
+
+function suggestTopic(prompt) {
+  addMessage('teacher', prompt);
+  speak(prompt);
+}
+
+// Load voices
+if (synthesis.onvoiceschanged !== undefined) {
+  synthesis.onvoiceschanged = () => {
+    synthesis.getVoices();
+  };
+}
+</script>
+
+</body>
+</html>
