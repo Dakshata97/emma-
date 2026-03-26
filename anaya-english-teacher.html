@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Anaya - Your English Teacher</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --primary: #2d3561;
+  --secondary: #c05c7e;
+  --accent: #f3826f;
+  --bg-light: #fef8f4;
+  --bg-white: #ffffff;
+  --text-dark: #2d3561;
+  --text-muted: #6b7280;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --story-purple: #8b5cf6;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #fef8f4 0%, #ffe9e0 100%);
+  min-height: 100vh;
+  color: var(--text-dark);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 20px 20px;
+  animation: fadeInDown 0.6s ease;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.teacher-avatar {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  box-shadow: 0 10px 30px rgba(124, 58, 237, 0.4);
+  animation: pulse 2s ease-in-out infinite;
+  border: 3px solid #a78bfa;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.teacher-avatar.listening {
+  animation: listening 1s ease-in-out infinite;
+}
+
+@keyframes listening {
+  0%, 100% {
+    box-shadow: 0 10px 30px rgba(192, 92, 126, 0.3);
+  }
+  50% {
+    box-shadow: 0 10px 40px rgba(192, 92, 126, 0.6), 0 0 0 10px rgba(192, 92, 126, 0.1);
+  }
+}
+
+h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 42px;
+  color: var(--primary);
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.tagline {
+  font-size: 16px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Accent Selector */
+.accent-selector {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 20px 0;
+  padding: 12px;
+  background: white;
+  border-radius: 16px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 2px 10px rgba(45, 53, 97, 0.08);
+}
+
+.accent-btn {
+  flex: 1;
+  padding: 12px 20px;
+  border: 2px solid #e5e7eb;
+  background: white;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.accent-btn:hover {
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+}
+
+.accent-btn.active {
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  border-color: var(--secondary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(192, 92, 126, 0.3);
+}
+
+.mode-selector {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
+  flex: 1;
+  max-width: 280px;
+  min-width: 200px;
+}
+
+.mode-btn:hover {
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(192, 92, 126, 0.15);
+}
+
+.mode-btn.active {
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  border-color: var(--secondary);
+  color: white;
+  box-shadow: 0 4px 15px rgba(192, 92, 126, 0.3);
+}
+
+.mode-btn.story-mode.active {
+  background: linear-gradient(135deg, var(--story-purple), #a78bfa);
+  border-color: var(--story-purple);
+}
+
+.mode-icon {
+  font-size: 28px;
+}
+
+.mode-info {
+  text-align: left;
+}
+
+.mode-title {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.mode-btn.active .mode-title {
+  color: white;
+}
+
+.mode-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.mode-btn.active .mode-desc {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* PDF Upload Area */
+.pdf-upload-area {
+  display: none;
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin: 20px 0;
+  box-shadow: 0 4px 20px rgba(45, 53, 97, 0.08);
+  animation: fadeIn 0.6s ease;
+}
+
+.pdf-upload-area.active {
+  display: block;
+}
+
+.upload-box {
+  border: 3px dashed #e5e7eb;
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.upload-box:hover {
+  border-color: var(--story-purple);
+  background: #f9f5ff;
+}
+
+.upload-box.dragover {
+  border-color: var(--story-purple);
+  background: #f9f5ff;
+}
+
+.upload-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.upload-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 8px;
+}
+
+.upload-hint {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+#pdfFile {
+  display: none;
+}
+
+.pdf-info {
+  display: none;
+  margin-top: 16px;
+  padding: 16px;
+  background: #f9f5ff;
+  border-radius: 12px;
+  border-left: 4px solid var(--story-purple);
+}
+
+.pdf-info.active {
+  display: block;
+}
+
+.pdf-name {
+  font-weight: 600;
+  color: var(--story-purple);
+  margin-bottom: 8px;
+}
+
+.start-story-btn {
+  margin-top: 12px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--story-purple), #a78bfa);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.start-story-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+}
+
+.chat-area {
+  flex: 1;
+  background: var(--bg-white);
+  border-radius: 24px;
+  padding: 30px;
+  margin: 20px 0;
+  box-shadow: 0 4px 20px rgba(45, 53, 97, 0.08);
+  overflow-y: auto;
+  max-height: 500px;
+  animation: fadeIn 0.6s ease 0.2s both;
+  -webkit-overflow-scrolling: touch;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message {
+  margin-bottom: 20px;
+  animation: slideIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.message.student {
+  text-align: right;
+}
+
+.message-bubble {
+  display: inline-block;
+  max-width: 80%;
+  padding: 16px 20px;
+  border-radius: 18px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+.message.teacher .message-bubble {
+  background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+  color: var(--text-dark);
+  border-bottom-left-radius: 4px;
+}
+
+.message.student .message-bubble {
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.story-text {
+  font-style: italic;
+  background: linear-gradient(135deg, #f9f5ff, #ede9fe);
+  border-left: 4px solid var(--story-purple);
+}
+
+.vocab-highlight {
+  background: #fef3c7;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #92400e;
+}
+
+.correction {
+  background: #fff3cd;
+  border-left: 4px solid var(--warning);
+  padding: 12px 16px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.correction-title {
+  font-weight: 600;
+  color: var(--warning);
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.correct-text {
+  color: var(--success);
+  font-weight: 500;
+}
+
+.vocab-box {
+  background: #fef3c7;
+  border-left: 4px solid #f59e0b;
+  padding: 12px 16px;
+  margin-top: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.vocab-title {
+  font-weight: 600;
+  color: #f59e0b;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.6s ease 0.4s both;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 16px 32px;
+  border: none;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'Inter', sans-serif;
+  -webkit-appearance: none;
+  touch-action: manipulation;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--secondary), var(--accent));
+  color: white;
+  box-shadow: 0 4px 15px rgba(192, 92, 126, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(192, 92, 126, 0.4);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--text-dark);
+  border: 2px solid #e5e7eb;
+  box-shadow: 0 2px 8px rgba(45, 53, 97, 0.08);
+}
+
+.btn-secondary:hover {
+  border-color: var(--secondary);
+  transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+  transform: translateY(0);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+.status {
+  text-align: center;
+  padding: 16px;
+  background: white;
+  border-radius: 16px;
+  margin: 16px 0;
+  font-weight: 500;
+  box-shadow: 0 2px 10px rgba(45, 53, 97, 0.06);
+}
+
+.status.listening {
+  background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+  color: #166534;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.status.speaking {
+  background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+  color: #1e40af;
+}
+
+.stats {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.stat-card {
+  background: white;
+  padding: 16px 24px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(45, 53, 97, 0.08);
+  min-width: 140px;
+}
+
+.stat-number {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--secondary);
+  display: block;
+}
+
+.stat-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.topics {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding: 0 20px 20px;
+}
+
+.topic-chip {
+  padding: 8px 16px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.topic-chip:hover {
+  border-color: var(--secondary);
+  background: var(--bg-light);
+  transform: translateY(-2px);
+}
+
+.topic-chip:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 32px;
+  }
+  
+  .teacher-avatar {
+    width: 100px;
+    height: 100px;
+    font-size: 50px;
+  }
+  
+  .mode-btn {
+    min-width: 160px;
+    padding: 12px 16px;
+  }
+  
+  .mode-icon {
+    font-size: 24px;
+  }
+  
+  .mode-title {
+    font-size: 14px;
+  }
+  
+  .mode-desc {
+    font-size: 11px;
+  }
+  
+  .chat-area {
+    padding: 20px;
+    max-height: 400px;
+  }
+  
+  .btn {
+    padding: 14px 24px;
+    font-size: 15px;
+  }
+  
+  .controls {
+    padding: 15px;
+  }
+  
+  .stat-card {
+    min-width: 120px;
+    padding: 12px 20px;
+  }
+  
+  .stat-number {
+    font-size: 28px;
+  }
+}
+
+/* iOS specific fixes */
+@supports (-webkit-touch-callout: none) {
+  .btn {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+  
+  input[type="file"] {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <div class="teacher-avatar" id="avatar">😎</div>
+    <h1>Anaya</h1>
+    <p class="tagline">Your Boss Lady English Teacher</p>
+  </div>
+
+  <!-- Accent Selector -->
+  <div class="accent-selector">
+    <button class="accent-btn active" data-accent="indian" onclick="switchAccent('indian')">
+      🇮🇳 Indian English
+    </button>
+    <button class="accent-btn" data-accent="native" onclick="switchAccent('native')">
+      🇺🇸 Native English
+    </button>
+  </div>
+
+  <!-- Mode Selector -->
+  <div class="mode-selector">
+    <button class="mode-btn active" data-mode="corporate" onclick="switchMode('corporate')">
+      <div class="mode-icon">💼</div>
+      <div class="mode-info">
+        <div class="mode-title">Corporate</div>
+        <div class="mode-desc">Professional English</div>
+      </div>
+    </button>
+    
+    <button class="mode-btn" data-mode="native" onclick="switchMode('native')">
+      <div class="mode-icon">🗣️</div>
+      <div class="mode-info">
+        <div class="mode-title">Native</div>
+        <div class="mode-desc">Casual & Natural</div>
+      </div>
+    </button>
+    
+    <button class="mode-btn story-mode" data-mode="story" onclick="switchMode('story')">
+      <div class="mode-icon">📚</div>
+      <div class="mode-info">
+        <div class="mode-title">Story Mode</div>
+        <div class="mode-desc">Learn through stories</div>
+      </div>
+    </button>
+  </div>
+
+  <!-- PDF Upload Area (for Story Mode) -->
+  <div class="pdf-upload-area" id="pdfUploadArea">
+    <div class="upload-box" id="uploadBox" onclick="document.getElementById('pdfFile').click()">
+      <div class="upload-icon">📖</div>
+      <div class="upload-text">Upload a Book (PDF)</div>
+      <div class="upload-hint">Click to browse or drag & drop</div>
+    </div>
+    <input type="file" id="pdfFile" accept=".pdf" onchange="handlePDFUpload(event)">
+    
+    <div class="pdf-info" id="pdfInfo">
+      <div class="pdf-name" id="pdfName"></div>
+      <button class="start-story-btn" onclick="startStoryMode()">✨ Start Story Time</button>
+    </div>
+  </div>
+
+  <div class="status" id="status">Ready to practice! Click "Start Speaking"</div>
+
+  <div class="chat-area" id="chatArea">
+    <div class="message teacher">
+      <div class="message-bubble">
+        Hey there! I'm Anaya, your boss lady English teacher. 😎 No nonsense, just results. Choose a mode above and let's get you speaking English like a pro! In Story Mode, upload any book and I'll bring it to life with drama and sarcasm while teaching you. Ready to level up? 🚀
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button class="btn btn-primary" id="startBtn" onclick="startListening()">
+      <span>🎤</span>
+      <span>Start Speaking</span>
+    </button>
+    <button class="btn btn-secondary" id="stopBtn" onclick="stopListening()" style="display: none;">
+      <span>⏹️</span>
+      <span>Stop</span>
+    </button>
+  </div>
+
+  <div class="topics">
+    <div class="topic-chip" onclick="suggestTopic('Tell me about your work')">💼 Work</div>
+    <div class="topic-chip" onclick="suggestTopic('What are your hobbies?')">🎨 Hobbies</div>
+    <div class="topic-chip" onclick="suggestTopic('Describe your typical day')">📅 Daily Life</div>
+    <div class="topic-chip" onclick="suggestTopic('Tell me about your goals')">🎯 Goals</div>
+    <div class="topic-chip" onclick="suggestTopic('What did you do last weekend?')">🌟 Weekend</div>
+  </div>
+
+  <div class="stats">
+    <div class="stat-card">
+      <span class="stat-number" id="sessionCount">0</span>
+      <span class="stat-label">Sessions</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-number" id="correctionCount">0</span>
+      <span class="stat-label">Corrections</span>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script>
+// Global variables
+let currentMode = 'corporate';
+let currentAccent = 'indian';
+let isListening = false;
+let sessionCount = 0;
+let correctionCount = 0;
+let storyMode = false;
+let storyContent = '';
+let currentStoryIndex = 0;
+let storyChunks = [];
+
+// Speech recognition setup with iOS compatibility
+const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = SpeechRecognition ? new SpeechRecognition() : null;
+const synthesis = window.speechSynthesis;
+
+// PDF.js setup
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+if (!recognition) {
+  document.getElementById('status').textContent = '⚠️ Speech recognition not supported on this browser';
+  document.getElementById('status').className = 'status';
+  document.getElementById('startBtn').disabled = true;
+}
+
+if (recognition) {
+  recognition.continuous = true;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+}
+
+// Accent switching
+function switchAccent(accent) {
+  currentAccent = accent;
+  
+  document.querySelectorAll('.accent-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  document.querySelector(`.accent-btn[data-accent="${accent}"]`).classList.add('active');
+  
+  // Update recognition language
+  if (recognition) {
+    if (accent === 'indian') {
+      recognition.lang = 'en-IN';
+    } else {
+      recognition.lang = 'en-US';
+    }
+  }
+  
+  const accentName = accent === 'indian' ? 'Indian English' : 'Native English';
+  addMessage('teacher', `Switched to ${accentName} accent! I'll speak and listen in this accent now. 🎯`);
+  speak(`Switched to ${accentName} accent!`);
+}
+
+// Mode switching
+function switchMode(mode) {
+  currentMode = mode;
+  storyMode = mode === 'story';
+  
+  document.querySelectorAll('.mode-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  
+  document.querySelector(`.mode-btn[data-mode="${mode}"]`).classList.add('active');
+  
+  // Show/hide PDF upload area
+  const pdfArea = document.getElementById('pdfUploadArea');
+  if (storyMode) {
+    pdfArea.classList.add('active');
+    document.getElementById('chatArea').innerHTML = `
+      <div class="message teacher">
+        <div class="message-bubble story-text">
+          📚 Welcome to Story Mode! Upload a PDF book and I'll read it to you like a storyteller - with drama, emotion, and sarcasm! I'll also teach you vocabulary and grammar as we go. Let's make reading fun! ✨
+        </div>
+      </div>
+    `;
+  } else {
+    pdfArea.classList.remove('active');
+    let modeMessage = '';
+    
+    if (mode === 'corporate') {
+      modeMessage = 'Great! Let\'s practice professional English. Try discussing work, meetings, or business topics. I\'ll help you sound more professional! 💼';
+    } else {
+      modeMessage = 'Awesome! Let\'s practice casual English. Talk naturally like you would with friends. I\'ll teach you native expressions! 🗣️';
+    }
+    
+    document.getElementById('chatArea').innerHTML = `
+      <div class="message teacher">
+        <div class="message-bubble">
+          ${modeMessage}
+        </div>
+      </div>
+    `;
+  }
+  
+  speak(document.querySelector('#chatArea .message-bubble').textContent);
+}
+
+// PDF handling
+function handlePDFUpload(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  
+  const pdfInfo = document.getElementById('pdfInfo');
+  const pdfName = document.getElementById('pdfName');
+  
+  pdfName.textContent = `📖 ${file.name}`;
+  pdfInfo.classList.add('active');
+  
+  // Extract text from PDF
+  const reader = new FileReader();
+  reader.onload = async function(e) {
+    try {
+      const typedarray = new Uint8Array(e.target.result);
+      const pdf = await pdfjsLib.getDocument(typedarray).promise;
+      let fullText = '';
+      
+      for (let i = 1; i <= Math.min(pdf.numPages, 50); i++) { // Limit to first 50 pages
+        const page = await pdf.getPage(i);
+        const textContent = await page.getTextContent();
+        const pageText = textContent.items.map(item => item.str).join(' ');
+        fullText += pageText + ' ';
+      }
+      
+      storyContent = fullText;
+      // Split into chunks for dramatic reading
+      storyChunks = splitIntoChunks(fullText, 200); // ~200 words per chunk
+      
+      addMessage('teacher', `Perfect! I've loaded "${file.name}". Click "Start Story Time" and I'll begin reading it dramatically! 🎭`);
+    } catch (error) {
+      addMessage('teacher', 'Oops! I had trouble reading this PDF. Please try another one! 😅');
+    }
+  };
+  
+  reader.readAsArrayBuffer(file);
+}
+
+// Drag and drop for PDF
+const uploadBox = document.getElementById('uploadBox');
+
+uploadBox.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  uploadBox.classList.add('dragover');
+});
+
+uploadBox.addEventListener('dragleave', () => {
+  uploadBox.classList.remove('dragover');
+});
+
+uploadBox.addEventListener('drop', (e) => {
+  e.preventDefault();
+  uploadBox.classList.remove('dragover');
+  const file = e.dataTransfer.files[0];
+  if (file && file.type === 'application/pdf') {
+    document.getElementById('pdfFile').files = e.dataTransfer.files;
+    handlePDFUpload({ target: { files: [file] } });
+  }
+});
+
+function splitIntoChunks(text, wordsPerChunk) {
+  const words = text.split(' ');
+  const chunks = [];
+  
+  for (let i = 0; i < words.length; i += wordsPerChunk) {
+    chunks.push(words.slice(i, i + wordsPerChunk).join(' '));
+  }
+  
+  return chunks;
+}
+
+function startStoryMode() {
+  if (!storyContent) {
+    addMessage('teacher', 'Please upload a PDF first! 📚');
+    return;
+  }
+  
+  currentStoryIndex = 0;
+  readNextChunk();
+}
+
+function readNextChunk() {
+  if (currentStoryIndex >= storyChunks.length) {
+    addMessage('teacher', '📖 And that\'s all for now! Want to hear more? Just say "continue" or upload another book! 🌟');
+    speak('And that\'s all for now! Want to hear more? Just say continue or upload another book!');
+    return;
+  }
+  
+  const chunk = storyChunks[currentStoryIndex];
+  
+  // Add dramatic pauses and emphasis
+  const dramaticChunk = addDramaticElements(chunk);
+  
+  // Extract and highlight vocabulary
+  const { text, vocab } = highlightVocabulary(dramaticChunk);
+  
+  addMessage('teacher', text, true);
+  speakDramatically(chunk);
+  
+  // Teach vocabulary
+  if (vocab.length > 0) {
+    setTimeout(() => {
+      const vocabWord = vocab[0];
+      teachVocabulary(vocabWord);
+    }, 3000);
+  }
+  
+  currentStoryIndex++;
+}
+
+function addDramaticElements(text) {
+  // Add pauses, emphasis, and emotion
+  let dramatic = text;
+  
+  // Add emphasis to important words
+  dramatic = dramatic.replace(/\b(suddenly|amazing|terrible|wonderful|shocked|surprised)\b/gi, 
+    '<emphasis>$1</emphasis>');
+  
+  return dramatic;
+}
+
+function highlightVocabulary(text) {
+  // List of interesting vocabulary words to teach
+  const interestingWords = [
+    'magnificent', 'peculiar', 'tremendous', 'astonishing', 'bewildered',
+    'meticulous', 'profound', 'eloquent', 'resilient', 'ambiguous',
+    'inevitable', 'substantial', 'elaborate', 'deliberate', 'compelling'
+  ];
+  
+  let foundWords = [];
+  let highlightedText = text;
+  
+  interestingWords.forEach(word => {
+    const regex = new RegExp(`\\b${word}\\b`, 'gi');
+    if (regex.test(text)) {
+      foundWords.push(word);
+      highlightedText = highlightedText.replace(regex, 
+        `<span class="vocab-highlight">${word}</span>`);
+    }
+  });
+  
+  return { text: highlightedText, vocab: foundWords };
+}
+
+function teachVocabulary(word) {
+  const vocabLessons = {
+    'magnificent': { meaning: 'extremely beautiful or impressive', example: 'The view from the mountain was magnificent!' },
+    'peculiar': { meaning: 'strange or unusual', example: 'That\'s a peculiar way to solve the problem.' },
+    'tremendous': { meaning: 'very great in amount or size', example: 'She made a tremendous effort to win.' },
+    'astonishing': { meaning: 'extremely surprising or impressive', example: 'The magician\'s trick was astonishing!' },
+    'bewildered': { meaning: 'confused and uncertain', example: 'I was bewildered by all the instructions.' },
+  };
+  
+  const lesson = vocabLessons[word.toLowerCase()] || {
+    meaning: 'an interesting word',
+    example: `Try using "${word}" in your own sentence!`
+  };
+  
+  const vocabMessage = `
+    <div class="vocab-box">
+      <div class="vocab-title">📚 Vocabulary Time!</div>
+      <div><strong>${word}</strong> means: ${lesson.meaning}</div>
+      <div style="margin-top: 8px; font-style: italic;">💡 Example: ${lesson.example}</div>
+    </div>
+  `;
+  
+  const messageDiv = document.createElement('div');
+  messageDiv.className = 'message teacher';
+  messageDiv.innerHTML = `<div class="message-bubble">${vocabMessage}</div>`;
+  document.getElementById('chatArea').appendChild(messageDiv);
+  document.getElementById('chatArea').scrollTop = document.getElementById('chatArea').scrollHeight;
+}
+
+function speakDramatically(text) {
+  synthesis.cancel();
+  
+  // Add dramatic pauses and vary speed
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Set voice based on accent - deep, authoritative voice
+  const voices = synthesis.getVoices();
+  let selectedVoice;
+  
+  if (currentAccent === 'indian') {
+    selectedVoice = voices.find(voice => 
+      (voice.lang.includes('en-IN') && (voice.name.includes('Female') || voice.name.includes('Veena'))) ||
+      voice.name.includes('Veena') ||
+      (voice.lang.includes('en-IN') && voice.name.toLowerCase().includes('female'))
+    );
+    if (!selectedVoice) {
+      selectedVoice = voices.find(voice => voice.lang.includes('en-IN'));
+    }
+  } else {
+    selectedVoice = voices.find(voice => 
+      voice.name.includes('Samantha') || 
+      voice.name.includes('Karen') ||
+      voice.name.includes('Fiona') ||
+      voice.name.includes('Serena') ||
+      (voice.lang.includes('en-US') && voice.name.toLowerCase().includes('female')) ||
+      (voice.lang.includes('en-GB') && voice.name.toLowerCase().includes('female'))
+    );
+  }
+  
+  if (selectedVoice) {
+    utterance.voice = selectedVoice;
+  }
+  
+  utterance.lang = currentAccent === 'indian' ? 'en-IN' : 'en-US';
+  utterance.rate = 0.80; // Slower for storytelling
+  utterance.pitch = 0.85; // Deep boss lady voice
+  
+  // Vary pitch and rate for drama
+  if (text.includes('!')) {
+    utterance.pitch = 0.95; // Slightly higher for excitement
+    utterance.rate = 0.85;
+  }
+  if (text.includes('...')) {
+    utterance.rate = 0.7; // Very slow for suspense
+  }
+  
+  document.getElementById('status').textContent = '🎭 Anaya is telling the story...';
+  document.getElementById('status').className = 'status speaking';
+  
+  utterance.onend = () => {
+    document.getElementById('status').textContent = 'Ready to continue! Say "next" or ask me anything! 📚';
+    document.getElementById('status').className = 'status';
+  };
+  
+  synthesis.speak(utterance);
+}
+
+// Speech recognition handlers
+function startListening() {
+  if (!recognition) {
+    alert('Speech recognition is not supported on this device/browser. Please try Chrome on desktop or Android.');
+    return;
+  }
+  
+  try {
+    isListening = true;
+    recognition.start();
+    
+    document.getElementById('startBtn').style.display = 'none';
+    document.getElementById('stopBtn').style.display = 'flex';
+    document.getElementById('avatar').classList.add('listening');
+    document.getElementById('status').textContent = '🎤 Listening... speak now!';
+    document.getElementById('status').className = 'status listening';
+  } catch (error) {
+    console.error('Error starting recognition:', error);
+    stopListening();
+  }
+}
+
+function stopListening() {
+  isListening = false;
+  if (recognition) {
+    recognition.stop();
+  }
+  
+  document.getElementById('startBtn').style.display = 'flex';
+  document.getElementById('stopBtn').style.display = 'none';
+  document.getElementById('avatar').classList.remove('listening');
+  document.getElementById('status').textContent = 'Ready to practice! Click "Start Speaking"';
+  document.getElementById('status').className = 'status';
+}
+
+if (recognition) {
+  recognition.onresult = (event) => {
+    const last = event.results.length - 1;
+    const transcript = event.results[last][0].transcript.trim();
+    
+    addMessage('student', transcript);
+    
+    // Check for story mode commands
+    if (storyMode) {
+      if (transcript.toLowerCase().includes('next') || 
+          transcript.toLowerCase().includes('continue') ||
+          transcript.toLowerCase().includes('more')) {
+        readNextChunk();
+        return;
+      }
+      
+      if (transcript.toLowerCase().includes('stop reading')) {
+        addMessage('teacher', 'Okay, pausing the story! Say "continue" when you want more! 📖');
+        speak('Okay, pausing the story! Say continue when you want more!');
+        return;
+      }
+    }
+    
+    analyzeAndRespond(transcript);
+    
+    sessionCount++;
+    document.getElementById('sessionCount').textContent = sessionCount;
+  };
+
+  recognition.onerror = (event) => {
+    console.error('Speech recognition error:', event.error);
+    
+    if (event.error === 'no-speech') {
+      // Don't show error for no-speech, just continue listening
+      return;
+    }
+    
+    if (event.error === 'not-allowed' || event.error === 'service-not-allowed') {
+      alert('Microphone access denied. Please allow microphone access in your browser/device settings.');
+      stopListening();
+    } else if (event.error === 'network') {
+      speak("Network error. Please check your connection and try again.");
+      stopListening();
+    }
+  };
+
+  recognition.onend = () => {
+    if (isListening) {
+      try {
+        recognition.start();
+      } catch (error) {
+        console.error('Error restarting recognition:', error);
+        stopListening();
+      }
+    }
+  };
+}
+
+function analyzeAndRespond(text) {
+  const analysis = analyzeEnglish(text);
+  
+  let response = '';
+  let hasCorrections = false;
+  
+  if (analysis.corrections.length > 0) {
+    hasCorrections = true;
+    correctionCount += analysis.corrections.length;
+    document.getElementById('correctionCount').textContent = correctionCount;
+    
+    response = getEncouragingResponse() + ' ';
+    analysis.corrections.forEach(correction => {
+      addCorrection(correction);
+    });
+  } else {
+    response = getPerfectResponse() + ' ';
+  }
+  
+  response += analysis.teachingPoint;
+  
+  addMessage('teacher', response);
+  speak(response);
+}
+
+function analyzeEnglish(text) {
+  const corrections = [];
+  let teachingPoint = '';
+  
+  // Common grammar mistakes
+  const grammarMistakes = [
+    { wrong: /\bi is\b/gi, correct: 'I am', example: '"I am" not "I is"' },
+    { wrong: /\bhe don't\b/gi, correct: 'he doesn\'t', example: '"He doesn\'t" not "he don\'t"' },
+    { wrong: /\bshe don't\b/gi, correct: 'she doesn\'t', example: '"She doesn\'t" not "she don\'t"' },
+    { wrong: /\bit don't\b/gi, correct: 'it doesn\'t', example: '"It doesn\'t" not "it don\'t"' },
+    { wrong: /\bgoed\b/gi, correct: 'went', example: '"Went" is the past tense of "go"' },
+    { wrong: /\bwas went\b/gi, correct: 'went', example: 'Just say "went", not "was went"' },
+    { wrong: /\bmuch people\b/gi, correct: 'many people', example: 'Use "many" with countable nouns' },
+    { wrong: /\bmore better\b/gi, correct: 'better', example: '"Better" already means "more good"' },
+    { wrong: /\bdidn't went\b/gi, correct: 'didn\'t go', example: 'Use base form after "didn\'t"' },
+    { wrong: /\bI wants\b/gi, correct: 'I want', example: 'Use "want" not "wants" with "I"' },
+    { wrong: /\bhe go\b/gi, correct: 'he goes', example: 'Add "s" for third person: "he goes"' },
+  ];
+  
+  grammarMistakes.forEach(mistake => {
+    if (mistake.wrong.test(text)) {
+      corrections.push({
+        wrong: text.match(mistake.wrong)[0],
+        correct: mistake.correct,
+        explanation: mistake.example
+      });
+    }
+  });
+  
+  // Mode-specific teaching
+  if (currentMode === 'corporate') {
+    const informalPhrases = [
+      { wrong: /\byeah\b/gi, correct: 'yes', example: 'In professional settings, say "yes" instead of "yeah"' },
+      { wrong: /\bgonna\b/gi, correct: 'going to', example: 'Say "going to" instead of "gonna" in business' },
+      { wrong: /\bwanna\b/gi, correct: 'want to', example: 'Use "want to" instead of "wanna" professionally' },
+    ];
+    
+    informalPhrases.forEach(phrase => {
+      if (phrase.wrong.test(text)) {
+        corrections.push({
+          wrong: text.match(phrase.wrong)[0],
+          correct: phrase.correct,
+          explanation: phrase.example,
+          type: 'formality'
+        });
+      }
+    });
+    
+    teachingPoint = "In professional contexts, remember to use formal language and complete sentences. 💼";
+  } else if (currentMode === 'native') {
+    teachingPoint = "Great! Try using more contractions like 'I'm', 'you're', 'gonna' to sound more natural! 🗣️";
+  }
+  
+  return { corrections, teachingPoint };
+}
+
+function getEncouragingResponse() {
+  const responses = [
+    "Good effort!",
+    "Nice try!",
+    "You're doing well!",
+    "Keep it up!",
+    "Great progress!",
+  ];
+  return responses[Math.floor(Math.random() * responses.length)];
+}
+
+function getPerfectResponse() {
+  const responses = [
+    "Perfect!",
+    "Excellent!",
+    "Great job!",
+    "Very good!",
+    "Well done!",
+    "That's correct!",
+  ];
+  return responses[Math.floor(Math.random() * responses.length)];
+}
+
+function addMessage(type, text, isStory = false) {
+  const chatArea = document.getElementById('chatArea');
+  const messageDiv = document.createElement('div');
+  messageDiv.className = `message ${type}`;
+  
+  const bubbleDiv = document.createElement('div');
+  bubbleDiv.className = `message-bubble ${isStory ? 'story-text' : ''}`;
+  bubbleDiv.innerHTML = text;
+  
+  messageDiv.appendChild(bubbleDiv);
+  chatArea.appendChild(messageDiv);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function addCorrection(correction) {
+  const chatArea = document.getElementById('chatArea');
+  const correctionDiv = document.createElement('div');
+  correctionDiv.className = 'message teacher';
+  
+  const icon = correction.type === 'formality' ? '💼' : '✏️';
+  const title = correction.type === 'formality' ? 'Professional tip' : 'Small correction';
+  
+  correctionDiv.innerHTML = `
+    <div class="message-bubble">
+      <div class="correction">
+        <div class="correction-title">${icon} ${title}</div>
+        <div>You said: "<strong>${correction.wrong}</strong>"</div>
+        <div>Say instead: "<span class="correct-text">${correction.correct}</span>"</div>
+        <div style="margin-top: 8px; font-style: italic;">💡 ${correction.explanation}</div>
+      </div>
+    </div>
+  `;
+  
+  chatArea.appendChild(correctionDiv);
+  chatArea.scrollTop = chatArea.scrollHeight;
+}
+
+function speak(text) {
+  synthesis.cancel();
+  
+  const utterance = new SpeechSynthesisUtterance(text);
+  
+  // Set voice based on current accent - prioritize deep, authoritative female voices
+  const voices = synthesis.getVoices();
+  let selectedVoice;
+  
+  if (currentAccent === 'indian') {
+    // For Indian accent, prefer female voices
+    selectedVoice = voices.find(voice => 
+      (voice.lang.includes('en-IN') && (voice.name.includes('Female') || voice.name.includes('Veena'))) ||
+      voice.name.includes('Veena') ||
+      (voice.lang.includes('en-IN') && voice.name.toLowerCase().includes('female'))
+    );
+    
+    // Fallback to any Indian voice
+    if (!selectedVoice) {
+      selectedVoice = voices.find(voice => voice.lang.includes('en-IN'));
+    }
+  } else {
+    // For Native accent, prefer deep, authoritative female voices
+    selectedVoice = voices.find(voice => 
+      voice.name.includes('Samantha') || 
+      voice.name.includes('Karen') ||
+      voice.name.includes('Victoria') ||
+      voice.name.includes('Serena') ||
+      voice.name.includes('Tessa') ||
+      voice.name.includes('Fiona') ||
+      (voice.lang.includes('en-US') && voice.name.toLowerCase().includes('female')) ||
+      (voice.lang.includes('en-GB') && voice.name.toLowerCase().includes('female'))
+    );
+  }
+  
+  if (selectedVoice) {
+    utterance.voice = selectedVoice;
+  }
+  
+  utterance.lang = currentAccent === 'indian' ? 'en-IN' : 'en-US';
+  utterance.rate = 0.85; // Slower, more deliberate
+  utterance.pitch = 0.85; // DEEPER pitch for boss lady voice
+  
+  document.getElementById('status').textContent = '🗣 Anaya is speaking...';
+  document.getElementById('status').className = 'status speaking';
+  
+  utterance.onend = () => {
+    if (isListening) {
+      document.getElementById('status').textContent = '🎤 Listening... speak now!';
+      document.getElementById('status').className = 'status listening';
+    } else {
+      document.getElementById('status').textContent = 'Ready to practice! Click "Start Speaking"';
+      document.getElementById('status').className = 'status';
+    }
+  };
+  
+  synthesis.speak(utterance);
+}
+
+function suggestTopic(prompt) {
+  addMessage('teacher', prompt);
+  speak(prompt);
+}
+
+// Load voices (critical for iOS)
+function loadVoices() {
+  return new Promise((resolve) => {
+    let voices = synthesis.getVoices();
+    if (voices.length > 0) {
+      resolve(voices);
+      return;
+    }
+    
+    synthesis.onvoiceschanged = () => {
+      voices = synthesis.getVoices();
+      resolve(voices);
+    };
+  });
+}
+
+// Initialize voices on load
+loadVoices();
+
+// iOS fix: Load voices on interaction
+document.addEventListener('click', () => {
+  loadVoices();
+}, { once: true });
+</script>
+
+</body>
+</html>
